@@ -36,7 +36,7 @@ class Inventory(object):
         for i in self.session.query(Group).all(): x[i.name] = i.serialize
         return json.dumps(x)
     def host(self, host):
-        print self.session.query(Host).all()
+        print json.dumps(self.session.query(Host).filter(Host.name == host).one().serialize)
     def host_add(self,name,groups=[]):
         # does this host exist?
         try:
@@ -98,4 +98,4 @@ if __name__ == "__main__":
     elif args['--list']:
         print inventory.list()
     elif args['--host']:
-        inventory(args['<host>'])
+        inventory.host(args['<host>'])
